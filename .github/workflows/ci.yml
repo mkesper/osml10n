@@ -36,3 +36,15 @@ jobs:
       - name: Test built image
         run: |
           docker compose run test
+
+      - name: Upload container image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile
+          provenance: mode=max
+          push: true
+          sbom: true
+          tags: |
+            {{ vars.REGISTRY }}/osml10n:latest
+            ${{ env.image_name_tag_version_timestamp }}
