@@ -2,12 +2,12 @@ Source: lua-unaccent
 Section: unknown
 Priority: optional
 Maintainer: Sven Geggus <sven-debian@geggus.net>
-Build-Depends: liblua5.3-dev, debhelper (>= 11)
+Build-Depends: liblua5.3-dev, debhelper (>= 11), libunac1-dev
 Standards-Version: 4.1.3
 Homepage: <insert the upstream URL, if relevant>
 
 Package: lua-unaccent
 Architecture: any
-Depends: lua5.3, ${misc:Depends}
+Depends: lua5.3, libunac1, ${misc:Depends}
 Description: Lua binding libunac
  Lua binding libunac
