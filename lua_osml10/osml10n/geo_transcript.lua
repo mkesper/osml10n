@@ -1,7 +1,7 @@
 local osml10n = {}
 
-local server_host = '127.0.0.1'
-local server_port = 8033
+local server_host = os.getenv("OSML10N_HOST") or 'localhost'
+local server_port = os.getenv("OSML10N_PORT") or 8033
 
 local socket = require('socket')
 local sock = socket.connect(server_host, server_port)
