@@ -11,6 +11,11 @@ jobs:
       packages: write
     runs-on: ubuntu-latest
     steps:
+      - name: Set timestamp
+        run: |
+          timestamp=$(date --utc +%Y-%m-%dT%H_%M_%S%z|tr + -)
+          echo "timestamp=${timestamp}" >> "$GITHUB_ENV"
+          echo "image_name_tag_version_timestamp=${{ vars.REGISTRY }}/osml10n:${{ github.sha }}-${timestamp}" >> "$GITHUB_ENV"
 
       - name: Checkout ${{ github.ref }}
         uses: actions/checkout@v4
@@ -24,7 +29,9 @@ jobs:
           context: .
           file: Dockerfile
           load: true
-          tags: osml10n-ci-test
+          tags: |
+            {{ vars.REGISTRY }}/osml10n:latest
+            ${{ env.image_name_tag_version_timestamp }}
 
       - name: Test built image
         run: |
