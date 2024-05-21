@@ -18,8 +18,14 @@ jobs:
       - name: Set up docker buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build with docker
+      - name: Build with docker and tag for local use
         uses: docker/build-push-action@v5
         with:
           context: .
           file: Dockerfile
+          load: true
+          tags: osml10n-ci-test
+
+      - name: Test built image
+        run: |
+          docker compose run test

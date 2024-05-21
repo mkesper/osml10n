@@ -1,0 +1,29 @@
+name: osml10n
+
+services:
+  osml10n:
+    container_name: osml10n
+    image: osml10n:test-ci
+    ports:
+      - 8033:8033
+    volumes:
+      - ./:/app/tests/
+
+  test:
+    container_name: test
+    image: osml10n:test-ci
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        apt-get update --yes
+        apt-get install --yes make
+        cd /app
+        while /bin/true; do
+          OSML10N_HOST=osml10n make test
+          sleep 15
+        done
+    depends_on:
+      - osml10n
+    volumes:
+      - ./:/app
