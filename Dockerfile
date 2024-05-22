@@ -38,6 +38,7 @@ WORKDIR /app
 
 COPY --link --from=builder /app/osml10n_${osml10n_version}_all.deb ./
 COPY --link --from=builder /app/lua-unaccent_${lua_unaccent_version}_${arch}.deb ./
+COPY --link lua_osml10/osml10n/* /usr/local/share/lua/5.3/osml10n/
 COPY --link entrypoint.sh ./
 
 # hadolint ignore=DL3008,DL3013,SC1091
