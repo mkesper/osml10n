@@ -12,10 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set timestamp
+        shell: bash
         run: |
           timestamp=$(date --utc +%Y-%m-%dT%H_%M_%S%z|tr + -)
+          repo="ghcr.io/${{ github.repository_owner }}"
+          echo "repo=${repo,,}" >> "$GITHUB_ENV"
           echo "timestamp=${timestamp}" >> "$GITHUB_ENV"
-          echo "image_name_tag_version_timestamp=ghcr.io/${${{ github.repository_owner }},,}/osml10n:${{ github.sha }}-${timestamp}" >> "$GITHUB_ENV"
+          echo "image_name_tag_version_timestamp=${repo,,}/osml10n:${{ github.sha }}-${timestamp}" >> "$GITHUB_ENV"
+          [[ -z "$repo" ]] && exit 1
 
       - name: Checkout ${{ github.ref }}
         uses: actions/checkout@v4
@@ -45,5 +49,5 @@ jobs:
           push: true
           sbom: true
           tags: |
-            ghcr.io/${${{ github.repository_owner }},,}/osml10n:latest
+            ${{ env.repo }}/osml10n:latest
             ${{ env.image_name_tag_version_timestamp }}
