@@ -19,10 +19,7 @@ services:
         apt-get update --yes
         apt-get install --yes make
         cd /app
-        while /bin/true; do
-          OSML10N_HOST=osml10n make test
-          sleep 15
-        done
+        OSML10N_HOST=osml10n-test make test
     depends_on:
       - osml10n
     volumes:
