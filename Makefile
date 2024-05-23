@@ -16,7 +16,6 @@ get_deps: $(py_venv)/bin/activate
 
 $(py_venv)/bin/activate:
 	python3 -m venv $(py_venv)
-	. $(py_venv)/bin/activate
 
 install: install-python install-lua
 
@@ -43,7 +42,7 @@ deb:
 		dpkg-buildpackage -b -uc
 	)
 
-install-python: check_system
+install-python: check_system $(py_venv)/bin/activate
 	. $(py_venv)/bin/activate
 	pip install .
 
