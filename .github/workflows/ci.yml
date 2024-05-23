@@ -19,6 +19,8 @@ jobs:
           echo "repo=${repo,,}" >> "$GITHUB_ENV"
           echo "timestamp=${timestamp}" >> "$GITHUB_ENV"
           echo "image_name_tag_version_timestamp=${repo,,}/osml10n:${{ github.sha }}-${timestamp}" >> "$GITHUB_ENV"
+          echo "GITHUB_ENV:"
+          echo "${GITHUB_ENV}"
           [[ -z "$repo" ]] && exit 1
 
       - name: Checkout ${{ github.ref }}
