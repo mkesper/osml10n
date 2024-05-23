@@ -30,8 +30,7 @@ jobs:
           file: Dockerfile
           load: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/osml10n:latest
-            ${{ env.image_name_tag_version_timestamp }}
+            osml10n:test-ci
 
       - name: Test built image
         run: |

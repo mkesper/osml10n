@@ -1,9 +1,7 @@
-name: osml10n
-
 services:
   test:
     container_name: test
-    image: ${REGISTRY}/osml10n:latest
+    image: osml10n:test-ci
     entrypoint:
       - /bin/bash
       - -c
