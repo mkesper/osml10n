@@ -15,7 +15,7 @@ jobs:
         run: |
           timestamp=$(date --utc +%Y-%m-%dT%H_%M_%S%z|tr + -)
           echo "timestamp=${timestamp}" >> "$GITHUB_ENV"
-          echo "image_name_tag_version_timestamp=${{ vars.REGISTRY }}/osml10n:${{ github.sha }}-${timestamp}" >> "$GITHUB_ENV"
+          echo "image_name_tag_version_timestamp=ghcr.io/${{ github.repository_owner }}/osml10n:${{ github.sha }}-${timestamp}" >> "$GITHUB_ENV"
 
       - name: Checkout ${{ github.ref }}
         uses: actions/checkout@v4
@@ -30,7 +30,7 @@ jobs:
           file: Dockerfile
           load: true
           tags: |
-            ${{ vars.REGISTRY }}/osml10n:latest
+            ghcr.io/${{ github.repository_owner }}/osml10n:latest
             ${{ env.image_name_tag_version_timestamp }}
 
       - name: Test built image
@@ -46,5 +46,5 @@ jobs:
           push: true
           sbom: true
           tags: |
-            ${{ vars.REGISTRY }}/osml10n:latest
+            ghcr.io/${{ github.repository_owner }}/osml10n:latest
             ${{ env.image_name_tag_version_timestamp }}

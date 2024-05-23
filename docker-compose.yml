@@ -1,26 +1,23 @@
 name: osml10n
 
 services:
-  osml10n:
-    container_name: osml10n-test
-    image: ${REGISTRY:-ghcr.io/mobidrom}/osml10n:latest
-    ports:
-      - 8033:8033
-    volumes:
-      - ./:/app/tests/
-
   test:
     container_name: test
-    image: ${REGISTRY:-ghcr.io/mobidrom}/osml10n:latest
+    image: ${REGISTRY}/osml10n:latest
     entrypoint:
       - /bin/bash
       - -c
       - |
-        apt-get update --yes
-        apt-get install --yes make
         cd /app
-        OSML10N_HOST=osml10n-test make test
-    depends_on:
-      - osml10n
+        nohup ./entrypoint.sh &
+        cd tests
+        retries=6
+        while (( retries > 0 )); do
+          ./runtests.lua && exit 0
+          (( retries-- ))
+          sleep 5
+        done
+        echo "Error: Giving up!"
+        exit 1
     volumes:
-      - ./:/app
+      - ./lua_osml10/tests:/app/tests/
